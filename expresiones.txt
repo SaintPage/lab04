@@ -1,0 +1,5 @@
+// Laboratorio 4 - formato:  expresion regular ; cadena w
+(a*|b*)+ ; aaabbb
+((ε|a)|b*)* ; abba
+(a|b)*abb(a|b)* ; babbaab
+0?(1?)?0* ; 01000
