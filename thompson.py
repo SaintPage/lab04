@@ -269,7 +269,6 @@ class _Constructor:
                          y_max=max(a.y_max, b.y_max))
 
     # Regla 4: cerradura de Kleene A*. Inicio y final nuevos, con el
-    # camino de salto (cero repeticiones) y el de regreso (una mas).
  
     def estrella(self, a):
         a.desplazar(_HUECO, 0)
@@ -319,8 +318,21 @@ def thompson(raiz, expresion=''):
     """Aplica el algoritmo de Thompson al arbol y devuelve el AFN."""
     constructor = _Constructor()
     fragmento = _construir(raiz, constructor)
-    return AFN(constructor.transiciones, fragmento.inicio, fragmento.fin,
-               fragmento.posiciones, constructor.curvaturas, expresion)
+
+    # Renumerar estados para que el inicial quede como 0
+    ini = fragmento.inicio
+    todos = list(constructor.transiciones.keys())
+    orden = [ini] + [e for e in todos if e != ini]
+    mapa = {viejo: nuevo for nuevo, viejo in enumerate(orden)}
+
+    nuevas_trans = {mapa[e]: [(s, mapa[d]) for s, d in ts]
+                    for e, ts in constructor.transiciones.items()}
+    nuevas_pos   = {mapa[e]: p for e, p in fragmento.posiciones.items()}
+    nuevas_curv  = {(mapa[o], mapa[d]): c
+                    for (o, d), c in constructor.curvaturas.items()}
+
+    return AFN(nuevas_trans, mapa[fragmento.inicio], mapa[fragmento.fin],
+               nuevas_pos, nuevas_curv, expresion)
 
 
 # SECCION 4. Dibujo del AFN con matplotlib
