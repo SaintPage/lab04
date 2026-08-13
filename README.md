@@ -12,6 +12,6 @@ Cuarto laboratorio del curso de Teoria de la Computacion. El repositorio incluye
 
 El programa lee expresiones.txt, procesa cada linea y guarda el arbol sintactico y el AFN de cada expresion como PNG en la carpeta salida.
 
-## Video de los programas
+## Video del programa
 
 [Ver Explicacion](https://youtu.be/2WQwB032XIU)
