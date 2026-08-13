@@ -223,9 +223,7 @@ class _Constructor:
         self.curvaturas[(origen, destino)] = 2.0 * altura / distancia
 
     # Regla 1: hoja. Dos estados nuevos unidos por el simbolo.
-    #
-    #     (i) --a--> (f)
-    #
+
     def basico(self, etiqueta):
         i = self.nuevo_estado()
         f = self.nuevo_estado()
@@ -234,10 +232,7 @@ class _Constructor:
                          ancho=_HUECO, y_min=0.0, y_max=0.0)
 
     # Regla 2: concatenacion A B. El final de A se une al inicio de B con
-    # una transicion epsilon. No se crean estados nuevos.
-    #
-    #     (iA) ~~A~~> (fA) --e--> (iB) ~~B~~> (fB)
-    #
+    
     def concatenar(self, a, b):
         b.desplazar(a.ancho + _HUECO, 0)
         self.conectar(a.fin, EPSILON, b.inicio)
@@ -275,13 +270,7 @@ class _Constructor:
 
     # Regla 4: cerradura de Kleene A*. Inicio y final nuevos, con el
     # camino de salto (cero repeticiones) y el de regreso (una mas).
-    #
-    #                 .--------e--------.
-    #                 v                 |
-    #     (i) --e--> (iA) ~~A~~> (fA) --e--> (f)
-    #      |                                  ^
-    #      '---------------e------------------'
-    #
+ 
     def estrella(self, a):
         a.desplazar(_HUECO, 0)
 
